@@ -389,8 +389,12 @@
 	}
 
 	utils = Utils();
-	window.QUXFile = QUXFile;
-	window.QUXViewer = QUXViewer;
+	
+	window.Quxly = {
+		File: QUXFile,
+		Viewer: QUXViewer,
+		utils: utils
+	};
 	
 })();
 

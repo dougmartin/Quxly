@@ -12,14 +12,14 @@ function each(object, callback) {
 
 var quxFile;
 
-test("QUXFile function exists", function() {
+test("Quxly.File function exists", function() {
 	expect(1);
-	ok(window.QUXFile);
+	ok(window.Quxly);
 });
 
 module("Empty qux file", {
 	setup: function () {
-		quxFile = QUXFile("");
+		quxFile = Quxly.File("");
 	}
 });
 
@@ -71,7 +71,7 @@ test("default metasettings", emptyTests.defaultMetasetttings);
 
 module("Empty qux file with passed in metasettings options", {
 	setup: function () {
-		quxFile = QUXFile("", {tabSpacing: 5, foo: "bar"});
+		quxFile = Quxly.File("", {tabSpacing: 5, foo: "bar"});
 	}
 });
 
@@ -83,7 +83,7 @@ test("custom metasettings", function() {
 
 module("Blank line qux file", {
 	setup: function () {
-		quxFile = QUXFile("  ");
+		quxFile = Quxly.File("  ");
 	}
 });
 
@@ -106,7 +106,7 @@ test("no start state", emptyTests.noStartState);
 
 module("Multiple blank line qux file", {
 	setup: function () {
-		quxFile = QUXFile("  \n   \n    ");
+		quxFile = Quxly.File("  \n   \n    ");
 	}
 });
 
@@ -132,7 +132,7 @@ test("no start state", emptyTests.noStartState);
 
 module("Tabs in qux file", {
 	setup: function () {
-		quxFile = QUXFile("\t@foo\n\t\tbar\n    \t  \tbaz");
+		quxFile = Quxly.File("\t@foo\n\t\tbar\n    \t  \tbaz");
 	}
 });
 
@@ -159,7 +159,7 @@ test("has text", function() {
 
 module("Tabs in qux file with non-standard tab spacing ", {
 	setup: function () {
-		quxFile = QUXFile("%% tabSpacing: 5\n\t@foo\n\t\tbar\n    \t  \tbaz");
+		quxFile = Quxly.File("%% tabSpacing: 5\n\t@foo\n\t\tbar\n    \t  \tbaz");
 	}
 });
 
@@ -182,7 +182,7 @@ test("tabs expanded in descriptions", function() {
 
 module("Comment only qux file", {
 	setup: function () {
-		quxFile = QUXFile("// this is a comment\n// this is another comment");
+		quxFile = Quxly.File("// this is a comment\n// this is another comment");
 	}
 });
 
@@ -204,7 +204,7 @@ test("no start state", emptyTests.noStartState);
 
 module("Metasettings only in qux file", {
 	setup: function () {
-		quxFile = QUXFile("%% bar: baz");
+		quxFile = Quxly.File("%% bar: baz");
 	}
 });
 
@@ -217,7 +217,7 @@ module("Invalid state declaration");
 
 test("raises error", function () {
 	raises(function () {
-		quxFile = QUXFile("@");
+		quxFile = Quxly.File("@");
 	}, /Invalid state declaration/, "Is invalid state declaration");
 });
 
@@ -225,13 +225,13 @@ module("Invalid mixin declaration");
 
 test("raises error", function () {
 	raises(function () {
-		quxFile = QUXFile(".");
+		quxFile = Quxly.File(".");
 	}, /Invalid mixin declaration/, "Is invalid mixin declaration");
 });
 
 module("Single state with no title qux file", {
 	setup: function () {
-		quxFile = QUXFile("@foo");
+		quxFile = Quxly.File("@foo");
 	}
 });
 
@@ -257,7 +257,7 @@ test("foo state has no next states", function () {
 
 module("Single mixin with no title qux file", {
 	setup: function () {
-		quxFile = QUXFile(".foo");
+		quxFile = Quxly.File(".foo");
 	}
 });
 
@@ -283,7 +283,7 @@ test("foo mixin has no next states", function () {
 
 module("Single state with title, description and next states", {
 	setup: function () {
-		quxFile = QUXFile("@foo Foo state\n  - description line 1\n  - description line 2\n  if bar => @bam");
+		quxFile = Quxly.File("@foo Foo state\n  - description line 1\n  - description line 2\n  if bar => @bam");
 	}
 });
 
@@ -313,7 +313,7 @@ test("foo state has no next states", function () {
 
 module("Single state with single mixin that is used", {
 	setup: function () {
-		quxFile = QUXFile(".line2 \n  - description line 2\n\n@foo Foo state\n  - description line 1\n  += .line2 \n  if bar => @bam");
+		quxFile = Quxly.File(".line2 \n  - description line 2\n\n@foo Foo state\n  - description line 1\n  += .line2 \n  if bar => @bam");
 	}
 });
 
@@ -336,7 +336,7 @@ test("foo state has two line description", function () {
 
 module("Single state with single mixin that is used with regex", {
 	setup: function () {
-		quxFile = QUXFile(".line2 \n  - description line 2\n\n@foo Foo state\n  - description line 1\n  += .lin.* \n  if bar => @bam");
+		quxFile = Quxly.File(".line2 \n  - description line 2\n\n@foo Foo state\n  - description line 1\n  += .lin.* \n  if bar => @bam");
 	}
 });
 
@@ -359,7 +359,7 @@ test("foo state has two line description", function () {
 
 module("One normal state with wildcard state", {
 	setup: function () {
-		quxFile = QUXFile("@foo Foo state\n  - description line 1\n  if bar => @bam\n\n@.*\n  - description line 2");
+		quxFile = Quxly.File("@foo Foo state\n  - description line 1\n  if bar => @bam\n\n@.*\n  - description line 2");
 	}
 });
 
