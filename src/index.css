@@ -1,0 +1,78 @@
+body {
+	font-family: sans-serif;
+	background-color: #fff;
+}
+
+h1 {
+	font-size: 3em;
+}
+
+h2 {
+	font-size: 1.5em;
+}
+
+h3 {
+	font-size: 1.3em;
+	font-weight: normal;
+}
+
+
+#simplemodal-overlay {
+	background-color: #000;
+}
+
+#simplemodal-container {
+	background-color: #fff; 
+	border: 6px solid #e6eeee; 
+	padding: 15px;
+	min-height: 300px;
+}
+
+#simplemodal-container a.modalCloseImg {
+	background:url(images/x.png) no-repeat; /* adjust url as required */
+	width:25px;
+	height:29px;
+	display:inline;
+	z-index:3200;
+	position:absolute;
+	top:-5px;
+	right:-5px;
+	cursor:pointer;
+}		
+
+#container {
+	display: none;
+}
+
+.quxViewerContainer {
+}
+
+.quxViewerStateName {
+	font-size: 1.4em;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.quxViewerTitle {
+	font-weight: bold;
+	font-size: 2em;
+	margin-bottom: 15px;
+}
+
+.quxViewerDescription {
+	font-family: monospace;
+}
+
+.quxViewerButtonContainer {
+	margin: 20px 0;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	text-align: center;
+}
+
+.quxViewerButton {
+	margin: 5px;
+	padding: 5px;
+}

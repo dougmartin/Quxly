@@ -1,0 +1,57 @@
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>Quxly</title>
+	<link rel="stylesheet" href="index.css" type="text/css" media="screen"> 
+	
+	<!-- quxly.js has no dependencies... -->
+	<script type="text/javascript" src="js/quxly.js"></script>
+	
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+	<script type="text/javascript" src="js/3rd/jquery.ba-hashchange.min.js"></script>
+	<script type="text/javascript" src="js/3rd/jquery.simplemodal.1.4.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery.quxlypresenter.js"></script>
+	
+	<script type="text/javascript" src="index.js"></script>
+</head>
+<body>
+	
+	<!-- this is the "qux" - you can put qux in a page or load it from an url or a string -->
+	<script id="qux" type="text/qux">
+	
+		@demoStart Welcome to the demo
+			This demo shows how Quxly works.  Use the view source option on your browser
+			to see how this is built.
+			
+		@documentationStart Quxly Documentation
+			This is the Quxly documentation.
+			
+			
+	</script>	
+	
+	<!-- I know I should do this with divs but its so easy with tables... -->
+	<table width="100%" height="100%">
+		<tr>
+			<td align="center" valign="center">
+				<h1>Quxly</h1>
+				<h2>A human readable state language + viewer</h2>
+				<h3>by Doug Martin</h3>
+				
+				<p>
+					<a class="presentationLink" id="demoStart" href="#">Demo</a> 
+					| 
+					<a class="presentationLink" id="documentationStart" href="#">Documentation</a>
+					|
+					<a href="https://github.com/dougmartin/Quxly">Download</a>
+					|
+					<a id="viewSource" href="#">View Source</a>
+				</p>
+			</td>
+		</tr>
+	</table>
+
+	<!-- this is where the presentation is injected -->
+	<div id="container"></div>
+	
+</body>
+</html>

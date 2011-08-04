@@ -249,8 +249,9 @@
 		};
 	}
 
-	function QUXViewer(quxFile, settings) {
-		var outerContainer, container, stateName, title, description, buttons, currentStateName;
+	function QUXViewer(theQuxFile, settings) {
+		var quxFile = theQuxFile,
+			outerContainer, container, stateName, title, description, buttons, currentState;
 		
 		function addButton(nextState, text, className, container) {
 			var button = tag("button", className || "quxViewerButton");
@@ -280,38 +281,42 @@
 			description = tag("div", settings.descriptonClass || "quxViewerDescription"),
 			buttons = tag("div", settings.buttonContainerClass || "quxViewerButtonContainer"));
 			
+		// clear the container and add our stuff
+		outerContainer.innerHTML = "";
 		outerContainer.appendChild(container);
 
-		// conditional support for jQuery hashchange plugin
-		if (jQuery && jQuery.fn.hashchange) {
-			jQuery(window).hashchange(function () {
-				var newStateName = window.location.hash.substr(1);
-				if ((currentStateName != newStateName) && (newStateName.length > 0)) {
-					showState(newStateName);
-				}
-			});
-			jQuery(window).hashchange();
-		}
-		
 		function start(atState) {
 			atState = atState || window.location.hash.substr(1) || quxFile.startState.name;
 			if (!atState) {
-				alert("No starting state found");
+				throw "No starting state found";
 			}
 			showState(atState);
 		}
 		
 		function showState(newStateName) {
-			var html;
+			var html, result;
+			
+			if (settings.beforeStateChange) {
+				result = settings.beforeStateChange(state, newStateName);
+				if (result === false) {
+					return;
+				}
+				if (utils.type(result) === "String") {
+					newStateName = result;
+				}
+			}
 			
 			var state = quxFile.states[newStateName];
 			if (!state) {
-				alert("The '" + newStateName + "' state was not found");
+				throw "The '" + newStateName + "' state was not found";
 				return;
-			}			
+			}
+			
+			if (state == currentState) {
+				return;
+			}
 			
 			currentStateName = state.name;
-			window.location.hash = state.name;
 			
 			stateName.innerHTML = "@" + state.name;
 			stateName.style.display = settings.hideState ? "none" : "block";
@@ -332,6 +337,14 @@
 			utils.each(state.nextStates, function (index, nextState) {
 				addButton(nextState);
 			});
+			
+			if (settings.afterStateChange) {
+				settings.afterStateChange(state);
+			}			
+		}
+		
+		function setQuxFile(newQuxFile) {
+			quxFile = newQuxFile;
 		}
 		
 		function tag(name) {
@@ -353,7 +366,9 @@
 		}
 	
 		return {
-			start: start
+			start: start,
+			showState: showState,
+			setQuxFile: setQuxFile
 		}
 	}
 	
