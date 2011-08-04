@@ -40,7 +40,7 @@ $(function () {
 					
 					// markdown converter
 					descriptionGenerator: function (descriptionArray) {
-						var html = [], minIndent = 999999999999999;
+						var html = [], minIndent = 999999999999999, i;
 						
 						// find the minimum indent
 						$.each(descriptionArray, function (index, description) {

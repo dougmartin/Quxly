@@ -39,6 +39,7 @@
 			
 			Ecommerce Transaction => @ecommTransactionDemo
 			Zork => @zorkDemo
+			Simple Website => @simpleSiteDemo
 			
 		@ecommTransactionDemo Simple Ecommerce Transaction Demo
 		
@@ -91,9 +92,6 @@
 		@demoSyntax Quxly Syntax	
 		
 			This is where I put the syntax.
-			
-		@documentationStart Quxly Documentation
-			This is the Quxly documentation.
 			
 		@zorkStart Game started
 		
@@ -172,7 +170,7 @@
 			
 				You are eaten by a grue.
 				
-				Return to Demos =&gt; @demoStart	
+				Play Again =&gt; @zorkStart	
 				Return to Demos =&gt; @demoStart				
 			</pre>
 			
@@ -184,6 +182,116 @@
 			
 			Play Again => @zorkStart
 			Return to Demos => @demoStart
+			
+		.simpleSiteHeader
+			- Logo in header with link back to homepage
+			
+		.simpleSiteHeaderLoggedIn
+			+= .simpleSiteHeader
+			- Username in header
+			- Logout link in header
+			
+		.simpleSiteHeaderNotLoggedIn
+			+= .simpleSiteHeader
+			- Login link in header
+			- Register link in header
+			
+		@simpleSiteDemo Simple Website Demo
+		
+			This demo shows another feature of Quxly - mixins.  You define a mixin using a starting dot and then
+			use that mixin within other states or mixins with the &#43;= operator.  In the example below we
+			have headers built from other headers which saves you from repeating yourself.  A wildcard state
+			is also used to add the footer to all the homepage states.
+		
+			<pre>
+			&#46;simpleSiteHeader
+				&#45; Logo in header with link back to homepage
+
+			&#46;simpleSiteHeaderLoggedIn
+				&#43;= .simpleSiteHeader
+				- Username in header
+				- Logout link in header
+				
+			&#46;simpleSiteHeaderNotLoggedIn
+				&#43;= .simpleSiteHeader
+				- Login link in header
+				- Register link in header
+				
+			&#64;simpleSiteDemo Simple Website Demo
+			
+				Homepage if logged in =&gt; @simpleSiteHomepageLoggedIn
+				Homepage if not logged in =&gt; @simpleSiteHomepageNotLoggedIn
+				
+			&#46;simpleSiteHomepageContent
+				Full page picture of cute kittens with BUY NOW! link.
+				
+				BUY NOW =&gt; @simpleSiteHomepageBuyNow
+				
+			&#64;simpleSiteHomepageLoggedIn Simple Website Homepage (Logged In)
+				&#43;= .simpleSiteHeaderLoggedIn
+				
+				&#43;= .simpleSiteHomepageContent
+				
+			&#64;simpleSiteHomepageNotLoggedIn Simple Website Homepage (Not Logged In)
+				&#43;= .simpleSiteHeaderNotLoggedIn
+				
+				&#43;= .simpleSiteHomepageContent
+				
+			&#64;simpleSiteHomepageBuyNow BUY NOW! message is shown
+				
+				The BUY NOW! message is shown over the kittens with an Add to Cart link.
+				
+				Add to Cart =&gt; @addToCart	
+
+			&#47;&#47; Add the footer links to all the homepage states
+			&#64;.*Homepage.*
+			
+				- Copyright in footer
+				- Terms of Service in footer
+				- About Us in footer				
+			</pre>
+		
+			Homepage if logged in => @simpleSiteHomepageLoggedIn
+			Homepage if not logged in => @simpleSiteHomepageNotLoggedIn
+			
+		.simpleSiteHomepageContent
+			Full page picture of cute kittens with BUY NOW! link.
+			
+			BUY NOW => @simpleSiteHomepageBuyNow
+			
+		@simpleSiteHomepageLoggedIn Simple Website Homepage (Logged In)
+			+= .simpleSiteHeaderLoggedIn
+			
+			+= .simpleSiteHomepageContent
+			
+		@simpleSiteHomepageNotLoggedIn Simple Website Homepage (Not Logged In)
+			+= .simpleSiteHeaderNotLoggedIn
+			
+			+= .simpleSiteHomepageContent
+			
+		@simpleSiteHomepageBuyNow BUY NOW! message is shown
+		
+			The BUY NOW! message is shown over the kittens with an Add to Cart link.
+			
+			Add to Cart => @addToCart
+			
+		// Add the footer links to all the homepage states
+		@.*Homepage.*
+		
+			- Copyright in footer
+			- Terms of Service in footer
+			- About Us in footer
+			
+		//
+		// DOCUMENTATION
+		//
+		
+		@documentationStart Quxly Documentation
+		
+			This is the Quxly documentation.  Not much here now I'm afraid.  In the meantime try
+			out the demos as each demo explains its own source
+			
+			Try Demos => @demoStart
 			
 	</script>	
 	

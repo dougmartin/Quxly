@@ -89,6 +89,15 @@
 				}					
 			}
 			
+			function trimTrailingEmptyLines(currentItem) {
+				// remove trailing empty lines
+				if (currentItem != null) {
+					while ((currentItem.description.length > 0) && (utils.trim(currentItem.description[currentItem.description.length - 1].text).length == 0)) {
+						currentItem.description.pop();
+					}
+				}
+			}
+			
 			utils.each(lines, function (index, line) {
 				var trimmedLine = utils.trim(line),
 					firstChar = trimmedLine.substr(0, 1),
@@ -117,6 +126,8 @@
 
 				// see if we need to process any state or mixin patterns before we add the new state
 				if ((firstChar == "@") || (firstChar == ".")) {
+					trimTrailingEmptyLines(currentState);
+					trimTrailingEmptyLines(currentMixin);
 					checkForPatterns(currentState, states);
 					checkForPatterns(currentMixin, mixins);
 				}
@@ -215,6 +226,8 @@
 			});
 			
 			// process the trailing state or mixin
+			trimTrailingEmptyLines(currentState);
+			trimTrailingEmptyLines(currentMixin);
 			checkForPatterns(currentState, states);
 			checkForPatterns(currentMixin, mixins);
 			
