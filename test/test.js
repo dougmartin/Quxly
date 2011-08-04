@@ -328,11 +328,10 @@ test("line2 mixin exists", function () {
 });
 
 test("foo state has three line description", function () {
-	expect(4);
-	ok(quxFile.states.foo.description.length == 3);
+	expect(3);
+	ok(quxFile.states.foo.description.length == 2);
 	ok(quxFile.states.foo.description[0].text == "- description line 1");
 	ok(quxFile.states.foo.description[1].text == "- description line 2");
-	ok(quxFile.states.foo.description[2].text == "");
 });
 
 module("Single state with single mixin that is used with regex", {
@@ -352,11 +351,10 @@ test("line2 mixin exists", function () {
 });
 
 test("foo state has three line description", function () {
-	expect(4);
-	ok(quxFile.states.foo.description.length == 3);
+	expect(3);
+	ok(quxFile.states.foo.description.length == 2);
 	ok(quxFile.states.foo.description[0].text == "- description line 1");
 	ok(quxFile.states.foo.description[1].text == "- description line 2");
-	ok(quxFile.states.foo.description[2].text == "");
 });
 
 module("One normal state with wildcard state", {
@@ -371,9 +369,8 @@ test("foo state exists", function () {
 });
 
 test("foo state has three line description", function () {
-	expect(4);
-	ok(quxFile.states.foo.description.length == 3);
+	expect(3);
+	ok(quxFile.states.foo.description.length == 2);
 	ok(quxFile.states.foo.description[0].text == "- description line 1");
-	ok(quxFile.states.foo.description[1].text == "");
-	ok(quxFile.states.foo.description[2].text == "- description line 2");
+	ok(quxFile.states.foo.description[1].text == "- description line 2");
 });
