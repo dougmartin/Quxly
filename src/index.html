@@ -7,6 +7,9 @@
 	<!-- quxly.js has no dependencies... -->
 	<script type="text/javascript" src="js/quxly.js"></script>
 	
+	<!-- we will use markdown for this -->
+	<script type="text/javascript" src="js/3rd/showdown.js"></script>
+	
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 	<script type="text/javascript" src="js/3rd/jquery.ba-hashchange.min.js"></script>
 	<script type="text/javascript" src="js/3rd/jquery.simplemodal.1.4.1.min.js"></script>
@@ -19,9 +22,23 @@
 	<!-- this is the "qux" - you can put qux in a page or load it from an url or a string -->
 	<script id="qux" type="text/qux">
 	
+		// we are using Markdown here but you use whatever format you would like
+	
 		@demoStart Welcome to the demo
-			This demo shows how Quxly works.  Use the view source option on your browser
-			to see how this is built.
+		
+			This demo shows how Quxly works.  Use the view source option on your browser to see how this is built.
+			
+			This is another paragraph that should be split.
+			
+			1. Ordered list
+			2. This a test
+			
+			# h1
+			## h2
+			### h3
+			#### h4
+			##### h5
+			###### h6
 			
 		@documentationStart Quxly Documentation
 			This is the Quxly documentation.

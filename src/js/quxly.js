@@ -95,8 +95,8 @@
 					secondChar = trimmedLine.substr(1, 1),
 					restOfLine, indentLevel, parts, testState, i, foundState, toAppend, appendFrom, testPattern, ch;
 					
-				// skip empty lines
-				if (trimmedLine.length == 0) {
+				// skip the intial empty lines
+				if ((trimmedLine.length == 0) && !currentState && !currentMixin) {
 					return;
 				}
 				
@@ -323,15 +323,20 @@
 			
 			title.innerHTML = state.title;
 			
-			html = [];
-			utils.each(state.description, function (index, description) {
-				var i, spacing = [];
-				for (i = 0; i <= description.indentLevel; i++) {
-					spacing.push("&nbsp;");
-				}
-				html.push(spacing.join("") + description.text);
-			});
-			description.innerHTML = html.join("<br/>");
+			if (settings.descriptionGenerator) {
+				description.innerHTML = settings.descriptionGenerator(state.description);
+			}
+			else {
+				html = [];
+				utils.each(state.description, function (index, description) {
+					var i, spacing = [];
+					for (i = 0; i <= description.indentLevel; i++) {
+						spacing.push("&nbsp;");
+					}
+					html.push(spacing.join("") + description.text);
+				});
+				description.innerHTML = html.join("<br/>");
+			}
 			
 			buttons.innerHTML = "";
 			utils.each(state.nextStates, function (index, nextState) {

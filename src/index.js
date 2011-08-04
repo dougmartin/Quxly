@@ -1,6 +1,16 @@
 $(function () {
+
+	function closeModal() {
+		try {
+			$.modal.close();
+		}
+		catch (e) {
+		}
+	}
+
 	function loadPresentation(start) {
-		var container = $("#container")[0];
+		var container = $("#container")[0],
+			converter = new Showdown.converter();
 		
 		// the quxlyPresenter plugin is just a simple wrapper around Quxly that exposes a couple of callbacks
 		// that are used to maintain a state history so the back/forward buttons work
@@ -19,11 +29,31 @@ $(function () {
 						close: true,
 						overlayClose: true,
 						onClose: function () {
+							closeModal();
 							window.location.hash = "";
-							$.modal.close();
 							return true;
 						}
 					})
+				},
+				descriptionGenerator: function (descriptionArray) {
+					var html = [], minIndent = 999999999999999;
+					
+					// find the minimum indent
+					$.each(descriptionArray, function (index, description) {
+						minIndent = Math.max(minIndent, description.indentLevel);
+					});
+					
+					// generate the plain text removing the min indent
+					$.each(descriptionArray, function (index, description) {
+						var text = [];
+						for (i = minIndent; i < description.indentLevel; i++) {
+							text.push(" ");
+						}
+						text.push(description.text);
+						html.push(text.join(""));
+					});
+					
+					return converter.makeHtml(html.join("\n"));
 				}
 			}
 		);			
@@ -40,7 +70,7 @@ $(function () {
 			loadPresentation(newStateName);
 		}
 		else {
-			$.modal.close();
+			closeModal();
 		}
 	});
 	$(window).hashchange();			
