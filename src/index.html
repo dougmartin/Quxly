@@ -23,23 +23,24 @@
 	
 		// we are using Markdown here but you use whatever format you would like
 	
-		@demoStart Quxly Demo
+		@demoStart Quxly Demos
 		
-			This demo shows how Quxly works.  Use the view source option on your browser to see how this is built.
-			
 			Quixly lets you build human readable state machines that can then be "run" using a viewer like this one.  
 			I built it originally because I was having difficulty discussing and documenting complex game animations with non-programmers.
 			Since I built it I've found a lot of uses for it and I hope you do too.
 			
-			Quixly works by defining states and state tranistions using a simple syntax inspired by Markdown. This demo actually uses
+			Quixly works by defining states and state transitions using a simple syntax inspired by Markdown. These demos actually use
 			Markdown to format the description of each state but you are free to use whatever formatting you want.
 			
-			Here is a simple three state machine to document how a typical e-commerce transaction is done.  You can use your brower's
-			back and forward buttons to move around once you are in the demo.
+			If you <a href="#" class="viewSource">view the source</a> of this page you'll see how these demos are built.  The Qux code is built
+			right into the page!
 			
-			Simple Ecommerce Transaction => @ecommTransaction
+			Click on one of the buttons below to start the demo.
 			
-		@ecommTransaction Simple Ecommerce Transaction Demo
+			Ecommerce Transaction => @ecommTransactionDemo
+			Zork => @zorkDemo
+			
+		@ecommTransactionDemo Simple Ecommerce Transaction Demo
 		
 			This three state demo uses the following states (view source on this page and you'll see them).
 		
@@ -85,6 +86,8 @@
 			The purchase page is loaded which shows with the contents of the cart along with a form 
 			to submit credit card information.
 			
+			Return to Demos => @demoStart
+			
 		@demoSyntax Quxly Syntax	
 		
 			This is where I put the syntax.
@@ -92,6 +95,95 @@
 		@documentationStart Quxly Documentation
 			This is the Quxly documentation.
 			
+		@zorkStart Game started
+		
+			You are standing in an open field west of a white house, with a boarded front door.
+			This is a small mailbox here.
+			
+			Open Mailbox => @zorkOpenMailbox
+			
+		@zorkOpenMailbox You open the mailbox
+		
+			Opening the mailbox reveals a leaflet.
+			
+			Read Leaflet => @zorkReadLeaflet
+			
+		@zorkReadLeaflet  You read the leaflet
+		
+			WELCOME TO ZORK!
+			
+			ZORK is a game of adventure, danger, and low cunning. In it you will explore some of the 
+			most amazing territory ever seen by mortals. No computer should be without one!
+			
+		// the "Try Door" statement will be applied to all previous matching "zork" states
+		// but not the zork states after it
+		@zork.*
+			Try Door => @zorkTryDoor
+			
+		@zorkDemo Zork Demo
+		
+			This demo features the classic text adventure game, Zork 
+			([text courtesy of Dennis G. Jerz](http://jerz.setonhill.edu/if/canon/Zork.htm))
+			
+			The demo also shows one of the interesting features of Quxly: states names can be regular
+			expressions.  When each state is initially read its name is compared to all the existing 
+			states already defined.  If there is a match then the definition and next states of the 
+			current state are added to the matched state(s).  
+			
+			<pre>
+			&#64;zorkStart Game started
+			
+				You are standing in an open field west of a white house, with a boarded front door.
+				This is a small mailbox here.
+				
+				Open Mailbox =&gt; @zorkOpenMailbox
+				
+			&#64;zorkOpenMailbox You open the mailbox
+			
+				Opening the mailbox reveals a leaflet.
+				
+				Read Leaflet =&gt; @zorkReadLeaflet
+				
+			&#64;zorkReadLeaflet  You read the leaflet
+			
+				WELCOME TO ZORK!
+				
+				ZORK is a game of adventure, danger, and low cunning. In it you will explore some of the 
+				most amazing territory ever seen by mortals. No computer should be without one!
+				
+			&#47;&#47; the "Try Door" statement will be applied to all previous matching "zork" states
+			&#47;&#47; but not the zork states after it
+			&#64;zork.*
+				Try Door =&gt; @zorkTryDoor
+				
+			&#64;zorkDemo Zork Demo
+			
+				This demo features the classic text adventure game, Zork 
+				([text courtesy of Dennis G. Jerz](http://jerz.setonhill.edu/if/canon/Zork.htm))
+				
+				The demo also shows one of the interesting features of Quxly: states names can be regular
+				expressions.  When each state is initially read its name is compared to all the existing 
+				states already defined.  If there is a match then the definition and next states of the 
+				current state are added to the matched state(s).  
+				
+				(infinite recursion snipped in the bud here)
+			
+			&#64;zorkTryDoor You try the door
+			
+				You are eaten by a grue.
+				
+				Return to Demos =&gt; @demoStart	
+				Return to Demos =&gt; @demoStart				
+			</pre>
+			
+			Play Zork => @zorkStart
+		
+		@zorkTryDoor You try the door
+		
+			You are eaten by a grue.
+			
+			Play Again => @zorkStart
+			Return to Demos => @demoStart
 			
 	</script>	
 	
@@ -110,7 +202,7 @@
 					|
 					<a href="https://github.com/dougmartin/Quxly">Download</a>
 					|
-					<a id="viewSource" href="#">View Source</a>
+					<a class="viewSource" href="#">View Source</a>
 				</p>
 			</td>
 		</tr>
