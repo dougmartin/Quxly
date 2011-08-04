@@ -1,5 +1,10 @@
 $(function () {
 
+	var converter = new Showdown.converter(),
+		container = $("#container")[0],
+		quxFile = Quxly.File($("#qux")[0].innerHTML),
+		quxViewer;
+
 	function closeModal() {
 		try {
 			$.modal.close();
@@ -8,33 +13,31 @@ $(function () {
 		}
 	}
 
-	function loadPresentation(start) {
-		var container = $("#container")[0],
-			converter = new Showdown.converter();
+	$(window).hashchange(function () {
+		var newStateName = window.location.hash.substr(1);
+		if (newStateName.length == 0) {
+			closeModal();
+			return;
+		}
+		
+		if (!quxViewer) {
+			quxViewer = Quxly.Viewer(quxFile, {
 			
-		// the quxlyPresenter plugin is just a simple wrapper around Quxly that exposes a couple of callbacks
-		// that are used to maintain a state history so the back/forward buttons work
-		$.quxlyPresenter(
-			{
+				// were to add the elements
 				container: container,
-				fromDOM: "qux",
-				start: start,
+				
+				// where to start
+				start: newStateName,
+				
+				// don't show the state name at the top
 				hideState: true,
+				
+				// keep the state in the history so we enable the back/forward buttons
 				afterStateChange: function (state) {
-					// keep the state in the history so we enable the back/forward buttons
 					window.location.hash = state.name;
 				},
-				afterStartViewer: function () {
-					$.modal(container, {
-						close: true,
-						overlayClose: true,
-						onClose: function () {
-							closeModal();
-							window.location.hash = "";
-							return true;
-						}
-					})
-				},
+				
+				// markdown converter
 				descriptionGenerator: function (descriptionArray) {
 					var html = [], minIndent = 999999999999999;
 					
@@ -57,18 +60,20 @@ $(function () {
 					
 					return converter.makeHtml(html.join("\n"));
 				}
+			});
+		}
+		
+		quxViewer.start(newStateName);
+		
+		$.modal(container, {
+			close: true,
+			overlayClose: true,
+			onClose: function () {
+				closeModal();
+				window.location.hash = "";
+				return true;
 			}
-		);			
-	}
-
-	$(window).hashchange(function () {
-		var newStateName = window.location.hash.substr(1);
-		if (newStateName.length > 0) {
-			loadPresentation(newStateName);
-		}
-		else {
-			closeModal();
-		}
+		});
 	});
 	$(window).hashchange();			
 	

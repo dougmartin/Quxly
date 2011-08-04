@@ -255,7 +255,7 @@
 		function addButton(nextState, onClick, text, className) {
 			var button = tag("button", className || "quxViewerButton");
 			button.innerHTML = text || nextState.text || "Next";
-			(container || buttons).appendChild(button);
+			buttons.appendChild(button);
 			
 			function buttonClicked() {
 				if (onClick) {
@@ -319,6 +319,7 @@
 			if (state == currentState) {
 				return;
 			}
+			currentState = state;
 			
 			currentStateName = state.name;
 			
@@ -342,7 +343,9 @@
 				description.innerHTML = html.join("<br/>");
 			}
 			
-			buttons.innerHTML = "";
+			while (buttons.firstChild) {
+				buttons.removeChild(buttons.firstChild);
+			}
 			utils.each(state.nextStates, function (index, nextState) {
 				addButton(nextState);
 			});
