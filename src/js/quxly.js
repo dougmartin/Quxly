@@ -249,17 +249,21 @@
 		};
 	}
 
-	function QUXViewer(theQuxFile, settings) {
-		var quxFile = theQuxFile,
-			outerContainer, container, stateName, title, description, buttons, currentState;
+	function QUXViewer(quxFile, settings) {
+		var outerContainer, container, stateName, title, description, buttons, currentState;
 		
-		function addButton(nextState, text, className, container) {
+		function addButton(nextState, onClick, text, className) {
 			var button = tag("button", className || "quxViewerButton");
 			button.innerHTML = text || nextState.text || "Next";
 			(container || buttons).appendChild(button);
 			
 			function buttonClicked() {
-				showState(nextState.name);
+				if (onClick) {
+					onClick();
+				}
+				else {
+					showState(nextState.name);
+				}
 			}
 			
 			if (button.attachEvent) {
@@ -348,10 +352,6 @@
 			}			
 		}
 		
-		function setQuxFile(newQuxFile) {
-			quxFile = newQuxFile;
-		}
-		
 		function tag(name) {
 			var el = document.createElement(name),
 				args = Array.prototype.slice.call(arguments),
@@ -372,8 +372,7 @@
 	
 		return {
 			start: start,
-			showState: showState,
-			setQuxFile: setQuxFile
+			showState: showState
 		}
 	}
 	

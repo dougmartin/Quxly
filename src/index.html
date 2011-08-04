@@ -24,21 +24,71 @@
 	
 		// we are using Markdown here but you use whatever format you would like
 	
-		@demoStart Welcome to the demo
+		@demoStart Quxly Demo
 		
 			This demo shows how Quxly works.  Use the view source option on your browser to see how this is built.
 			
-			This is another paragraph that should be split.
+			Quixly lets you build human readable state machines that can then be "run" using a viewer like this one.  
+			I built it originally because I was having difficulty discussing and documenting complex game animations with non-programmers.
+			Since I built it I've found a lot of uses for it and I hope you do too.
 			
-			1. Ordered list
-			2. This a test
+			Quixly works by defining states and state tranistions using a simple syntax inspired by Markdown. This demo actually uses
+			Markdown to format the description of each state but you are free to use whatever formatting you want.
 			
-			# h1
-			## h2
-			### h3
-			#### h4
-			##### h5
-			###### h6
+			Here is a simple three state machine to document how a typical e-commerce transaction is done.  You can use your brower's
+			back and forward buttons to move around once you are in the demo.
+			
+			Simple Ecommerce Transaction => @ecommTransaction
+			
+		@ecommTransaction Simple Ecommerce Transaction Demo
+		
+			This three state demo uses the following states (view source on this page and you'll see them).
+		
+			<pre>
+			&#64;onItemPage Customer is viewing an item view page
+				
+				Page shows item image and description and the following buttons:
+			
+			    Add to Cart =&gt; @addToCart
+			    Purchase (if cart is not empty) =&gt; @purchase
+				
+			&#64;addToCart "Add to Cart" button is pressed
+			
+				Item is added to the cart on the left hand side of the page with the item still
+				visible on the page and a thumbnail of the item shown in the cart along with its title.
+			
+			    Purchase =&gt; @purchase
+				
+			&#64;purchase "Purchase" button is pressed
+			
+				The purchase page is loaded which shows with the contents of the cart along with a form
+				to submit credit card information.
+			</pre>
+			
+			Start the Demo => @onItemPage
+			
+		@onItemPage Customer is viewing an item view page
+			
+			Page shows item image and description and the following buttons:
+		
+			Add to Cart => @addToCart
+			Purchase (if cart is not empty) => @purchase
+			
+		@addToCart "Add to Cart" button is pressed
+		
+			Item is added to the cart on the left hand side of the page with the item still 
+			visible on the page and a thumbnail of the item shown in the cart along with its title.
+		
+			Purchase => @purchase
+			
+		@purchase "Purchase" button is pressed
+		
+			The purchase page is loaded which shows with the contents of the cart along with a form 
+			to submit credit card information.
+			
+		@demoSyntax Quxly Syntax	
+		
+			This is where I put the syntax.
 			
 		@documentationStart Quxly Documentation
 			This is the Quxly documentation.
@@ -55,9 +105,9 @@
 				<h3>by Doug Martin</h3>
 				
 				<p>
-					<a class="presentationLink" id="demoStart" href="#">Demo</a> 
+					<a href="#demoStart">Demo</a> 
 					| 
-					<a class="presentationLink" id="documentationStart" href="#">Documentation</a>
+					<a href="#documentationStart">Documentation</a>
 					|
 					<a href="https://github.com/dougmartin/Quxly">Download</a>
 					|

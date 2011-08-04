@@ -11,7 +11,7 @@ $(function () {
 	function loadPresentation(start) {
 		var container = $("#container")[0],
 			converter = new Showdown.converter();
-		
+			
 		// the quxlyPresenter plugin is just a simple wrapper around Quxly that exposes a couple of callbacks
 		// that are used to maintain a state history so the back/forward buttons work
 		$.quxlyPresenter(
@@ -40,7 +40,9 @@ $(function () {
 					
 					// find the minimum indent
 					$.each(descriptionArray, function (index, description) {
-						minIndent = Math.max(minIndent, description.indentLevel);
+						if (description.text.length > 0) {
+							minIndent = Math.min(minIndent, description.indentLevel);
+						}
 					});
 					
 					// generate the plain text removing the min indent
@@ -59,11 +61,6 @@ $(function () {
 		);			
 	}
 
-	$(".presentationLink").click(function () {
-		loadPresentation(this.id);
-		return false;
-	});
-	
 	$(window).hashchange(function () {
 		var newStateName = window.location.hash.substr(1);
 		if (newStateName.length > 0) {
