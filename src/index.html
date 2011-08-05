@@ -297,13 +297,169 @@
 		//
 		// DOCUMENTATION
 		//
+
+		.documentationHome
+			Documentation Home => @documentationStart
+		.basicSyntax	
+			Basic Syntax => @basicSyntax
+		.advancedSyntax
+			Advanced Syntax => @advancedSyntax
+		.internals
+			Internals => @internals
 		
 		@documentationStart Quxly Documentation
 		
-			This is the Quxly documentation.  Not much here now I'm afraid.  In the meantime try
-			out the demos as each demo explains its own source
+			Quxly is a compiler and viewer for a human readable state definition language created
+			to try to solve the following problems:
 			
-			Try Demos => @demoStart
+			1. How do you define how systems change over time in a way everyone can understand?
+			2. How do you track changes to the system definition?
+			3. What is the most flexible way to visualize state changes?
+			
+			Quxly is free and open source using a dual MIT and GPL license.  You are free to
+			pick which one suits you best, just keep the copyright info intact.
+			
+			- [MIT License](http://en.wikipedia.org/wiki/MIT_License)
+			- [GPL License](http://en.wikipedia.org/wiki/GNU_General_Public_License)
+			
+			Now, onto the stuff you probably actually care about...
+			
+			+= .basicSyntax
+			+= .advancedSyntax
+			+= .internals
+			
+		@basicSyntax Basic Syntax
+			
+			### Comments
+			
+			Comments start with two slashes as the first non-space character on the line:
+			
+			<pre>
+			&#47;&#47; This is the login form ...
+			</pre>
+			
+			### States
+			
+			State names start with the @ sign and can use any non-space character. The text after the
+			state name (on the same line) is assigned as the title for the state:  
+
+			<pre>
+			&#47;&#47; This is the login form ...
+			&#64;loginFormIsShown The login form is shown
+			</pre>
+			
+			Text between state names is not parsed except for the following two operators: =&gt; and &#43;=
+			
+			### State Changes
+			
+			The =&gt; operator defines a state change with the left hand side being the optional label 
+			(it will default to "Next" if one is not given) and the right hand side being a state name with
+			the @ sign:
+			
+			<pre>
+			&#47;&#47; This is the login form ...
+			&#64;loginFormIsShown The login form is shown
+				Login =&gt; @loginFormProcessed
+			</pre>
+			
+			The &#43;= operator is for including a mixin and is covered in the advanced syntax section.
+			
+			### State Descriptions
+			
+			Everything else is a free form description of the state with no formatting rules.  This
+			documentation uses a view that processes the text as Markdown but you can pick the formatting
+			you like.
+			
+			<pre>
+			&#47;&#47; This is the login form ...
+			&#64;loginFormIsShown The login form is shown
+			
+				- Username field
+				- Password field
+				
+				Login =&gt; @loginFormProcessed
+			</pre>			
+			
+			+= .documentationHome
+			+= .advancedSyntax
+			+= .internals
+			
+		@advancedSyntax Advanced Syntax
+
+			### Wildcard states
+			
+			In the basic syntax it was explained that state named can use any non-space character.  
+			However, when a new state is defined it is compared against previous states using the name as a 
+			regular expression.  Any matching states will have the current states definition and next state rules
+			applied to them.  This lets you apply a single definition against multiple states, saving you time:
+			
+			<pre>
+			&#64;loginFormIsShown The login form is shown
+				&#46;.. login stuff here
+				
+			&#64;signupFormIsShown The signup form is shown
+				&#46;.. signup stuff here
+				
+			&#64;.*Form.*
+				&#46;.. anything here will be added to the two matching "Form" states above but not the states after it.
+				
+			&#64;formPasswordFormIsShown The forgot password form is show
+				&#46;.. this is not touched
+			</pre>
+			
+			### Mixins
+			
+			The basic syntax also mentioned mixins.  Mixins are defined using a leading period and can then be
+			"mixed in" to subsequent states using the &#43;= operator.  Mixins work the same as wildcard states
+			but they are added within the description of the state.  Like wildcard states you can mixin
+			wildcard mixin definitions:
+			
+			<pre>
+			&#46;footerLinks
+				- About us
+				- Copyright
+				- Terms of Service
+				
+			&#46;userLinks
+				- Login
+				- Logout
+				- Register
+				
+			&#64;homepage The Homepage
+				&#43;= &#46;footerLinks
+				&#43;= &#46;userLinks
+				&#47;&#47; or you could do this: &#43;= &#46;.*Links
+			</pre>
+			
+			You can also mixin other states.  I'm not sure why you would want to but it was easy to implement :)
+			
+			### Meta Definitions
+			
+			Meta definitions start with two percent signs (%%).  Currently there is only one meta definition, 
+			tabSpacing, which controls how tabs are expanded and defaults to 4 spaces.  This changes it to 8:
+			
+			&#37;&#37; tabSpacing: 8
+			
+			That's it!
+			
+			+= .documentationHome
+			+= .basicSyntax
+			+= .internals
+			
+		@internals Internals
+		
+			Qux definitions are compiled and placed in a QUXFile() module which can be seen in the quxly.js
+			file.  The QUXViewer() module reads QUXFile() objects, builds the elements in the browser and
+			handles the state changes.  Getting the text into the QUXFile() is up to you but it is easy
+			to implement loading text from inside specially marked script tags in your html or via an AJAX
+			call.
+			
+			Building your own viewer that works on top of the QUXViewer() is pretty simple.  You are looking
+			at one right now.  View the source to see how it works.
+			
+			+= .documentationHome
+			+= .basicSyntax
+			+= .advancedSyntax
 			
 	</script>	
 	

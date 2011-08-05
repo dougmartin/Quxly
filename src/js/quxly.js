@@ -1,3 +1,12 @@
+/*!
+ * Quxly State Definition Language and Viewer
+ * http://quxly.com/
+ *
+ * Copyright 2011, Doug Martin
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ *
+ */
+ 
 (function () {
 	var utils;
 	
