@@ -292,7 +292,7 @@
 				button.attachEvent("onclick", buttonClicked);
 			}
 			else {
-				button.addEventListener("click", buttonClicked);
+				button.addEventListener("click", buttonClicked, false);
 			}
 		}
 		
