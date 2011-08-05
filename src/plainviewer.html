@@ -1,0 +1,80 @@
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>Plain QUX Viewer</title>
+	<link rel="stylesheet" href="plainviewer.css" type="text/css" media="screen"> 
+	
+	<!-- quxly.js has no dependencies... -->
+	<script type="text/javascript" src="js/quxly.js"></script>
+	
+	<!-- we will use markdown for this -->
+	<script type="text/javascript" src="js/3rd/showdown.js"></script>
+	
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+	
+	<script type="text/javascript">
+	
+		$(function () {
+			var converter = new Showdown.converter();
+				
+			$(".quxLink").click(function () {
+			
+				$.get(this.href, function (data) {
+				
+					var quxFile = Quxly.File(data);
+					var quxViewer = Quxly.Viewer(quxFile, {
+					
+						// were to add the elements
+						container: $("#container")[0],
+						
+						// don't show the state name at the top
+						hideState: true,
+						
+						// markdown converter
+						descriptionGenerator: function (descriptionArray) {
+							var html = [], minIndent = 999999999999999, i;
+							
+							// find the minimum indent
+							$.each(descriptionArray, function (index, description) {
+								if (description.text.length > 0) {
+									minIndent = Math.min(minIndent, description.indentLevel);
+								}
+							});
+							
+							// generate the plain text removing the min indent
+							$.each(descriptionArray, function (index, description) {
+								var text = [];
+								for (i = minIndent; i < description.indentLevel; i++) {
+									text.push(" ");
+								}
+								text.push(description.text);
+								html.push(text.join(""));
+							});
+							
+							return converter.makeHtml(html.join("\n"));
+						}
+					});
+					
+					quxViewer.start();
+				});
+				
+				return false;
+			});
+		});
+	
+	</script>
+</head>
+<body>
+	<h1>Plain QUX Viewer</h1>
+	
+	<!-- add links to external qux files here using the quxLink class -->
+
+	<a href="demos.qux" class="quxLink">Demos</a> 
+	|
+	<a href="documentation.qux" class="quxLink">Documentation</a>
+	
+	<!-- this is where the presentation is injected -->
+	<div id="container"></div>
+	
+</body>
+</html>

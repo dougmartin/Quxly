@@ -1,0 +1,89 @@
+body {
+	font-family: sans-serif;
+	background-color: #fff;
+	font-size: 0.9em;
+}
+
+h1 {
+	font-size: 3em;
+}
+
+h2 {
+	font-size: 1.5em;
+}
+
+h3 {
+	font-size: 1.3em;
+	font-weight: normal;
+}
+
+#container {
+}
+
+.quxViewerContainer {
+	padding: 15px;
+}
+
+.quxViewerContainer  h1 {
+	font-size: 1.6em;
+	font-weight: bold;
+}
+
+.quxViewerContainer  h2 {
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+.quxViewerContainer  h3 {
+	font-size: 1.4em;
+	font-weight: bold;
+}
+
+.quxViewerContainer  h4 {
+	font-size: 1.3em;
+	font-weight: bold;
+}
+
+.quxViewerContainer  h5 {
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+.quxViewerContainer  h6 {
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+.quxViewerContainer p {
+	line-height: 1.4em;
+}
+
+.quxViewerContainer blockquote {
+	font-family: monospace;
+}
+
+
+.quxViewerStateName {
+	font-size: 1.4em;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.quxViewerTitle {
+	font-weight: bold;
+	font-size: 2em;
+	margin-bottom: 15px;
+}
+
+.quxViewerDescription {
+}
+
+.quxViewerButtonContainer {
+	margin: 10px 0 0 0;
+	text-align: left;
+}
+
+.quxViewerButton {
+	margin: 5px;
+	padding: 5px;
+}

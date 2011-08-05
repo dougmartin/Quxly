@@ -1,0 +1,258 @@
+		@demoStart Quxly Demos
+		
+			Quixly lets you build human readable state machines that can then be "run" using a viewer like this one.  
+			I built it originally because I was having difficulty discussing and documenting complex game animations with non-programmers.
+			Since I built it I've found a lot of uses for it and I hope you do too.
+			
+			Quixly works by defining states and state transitions using a simple syntax inspired by Markdown. These demos actually use
+			Markdown to format the description of each state but you are free to use whatever formatting you want.
+			
+			If you <a href="#" class="viewSource">view the source</a> of this page you'll see how these demos are built.  The Qux code is built
+			right into the page!
+			
+			Click on one of the buttons below to start the demo.
+			
+			Ecommerce Transaction => @ecommTransactionDemo
+			Zork => @zorkDemo
+			Simple Website => @simpleSiteDemo
+			
+		@ecommTransactionDemo Simple Ecommerce Transaction Demo
+		
+			This three state demo uses the following states (view source on this page and you'll see them).
+		
+			<pre>
+			&#64;onItemPage Customer is viewing an item view page
+				
+				Page shows item image and description and the following buttons:
+			
+			    Add to Cart =&gt; @addToCart
+			    Purchase (if cart is not empty) =&gt; @purchase
+				
+			&#64;addToCart "Add to Cart" button is pressed
+			
+				Item is added to the cart on the left hand side of the page with the item still
+				visible on the page and a thumbnail of the item shown in the cart along with its title.
+			
+			    Purchase =&gt; @purchase
+				
+			&#64;purchase "Purchase" button is pressed
+			
+				The purchase page is loaded which shows with the contents of the cart along with a form
+				to submit credit card information.
+			</pre>
+			
+			Start the Demo => @onItemPage
+			
+		@onItemPage Customer is viewing an item view page
+			
+			Page shows item image and description and the following buttons:
+		
+			Add to Cart => @addToCart
+			Purchase (if cart is not empty) => @purchase
+			
+		@addToCart "Add to Cart" button is pressed
+		
+			Item is added to the cart on the left hand side of the page with the item still 
+			visible on the page and a thumbnail of the item shown in the cart along with its title.
+		
+			Purchase => @purchase
+			
+		@purchase "Purchase" button is pressed
+		
+			The purchase page is loaded which shows with the contents of the cart along with a form 
+			to submit credit card information.
+			
+			Return to Demos => @demoStart
+			
+		@demoSyntax Quxly Syntax	
+		
+			This is where I put the syntax.
+			
+		@zorkStart Game started
+		
+			You are standing in an open field west of a white house, with a boarded front door.
+			This is a small mailbox here.
+			
+			Open Mailbox => @zorkOpenMailbox
+			
+		@zorkOpenMailbox You open the mailbox
+		
+			Opening the mailbox reveals a leaflet.
+			
+			Read Leaflet => @zorkReadLeaflet
+			
+		@zorkReadLeaflet  You read the leaflet
+		
+			WELCOME TO ZORK!
+			
+			ZORK is a game of adventure, danger, and low cunning. In it you will explore some of the 
+			most amazing territory ever seen by mortals. No computer should be without one!
+			
+		// the "Try Door" statement will be applied to all previous matching "zork" states
+		// but not the zork states after it
+		@zork.*
+			Try Door => @zorkTryDoor
+			
+		@zorkDemo Zork Demo
+		
+			This demo features the classic text adventure game, Zork 
+			([text courtesy of Dennis G. Jerz](http://jerz.setonhill.edu/if/canon/Zork.htm))
+			
+			The demo also shows one of the interesting features of Quxly: states names can be regular
+			expressions.  When each state is initially read its name is compared to all the existing 
+			states already defined.  If there is a match then the definition and next states of the 
+			current state are added to the matched state(s).  
+			
+			<pre>
+			&#64;zorkStart Game started
+			
+				You are standing in an open field west of a white house, with a boarded front door.
+				This is a small mailbox here.
+				
+				Open Mailbox =&gt; @zorkOpenMailbox
+				
+			&#64;zorkOpenMailbox You open the mailbox
+			
+				Opening the mailbox reveals a leaflet.
+				
+				Read Leaflet =&gt; @zorkReadLeaflet
+				
+			&#64;zorkReadLeaflet  You read the leaflet
+			
+				WELCOME TO ZORK!
+				
+				ZORK is a game of adventure, danger, and low cunning. In it you will explore some of the 
+				most amazing territory ever seen by mortals. No computer should be without one!
+				
+			&#47;&#47; the "Try Door" statement will be applied to all previous matching "zork" states
+			&#47;&#47; but not the zork states after it
+			&#64;zork.*
+				Try Door =&gt; @zorkTryDoor
+				
+			&#64;zorkDemo Zork Demo
+			
+				This demo features the classic text adventure game, Zork 
+				([text courtesy of Dennis G. Jerz](http://jerz.setonhill.edu/if/canon/Zork.htm))
+				
+				The demo also shows one of the interesting features of Quxly: states names can be regular
+				expressions.  When each state is initially read its name is compared to all the existing 
+				states already defined.  If there is a match then the definition and next states of the 
+				current state are added to the matched state(s).  
+				
+				(infinite recursion snipped in the bud here)
+			
+			&#64;zorkTryDoor You try the door
+			
+				You are eaten by a grue.
+				
+				Play Again =&gt; @zorkStart	
+				Return to Demos =&gt; @demoStart				
+			</pre>
+			
+			Play Zork => @zorkStart
+		
+		@zorkTryDoor You try the door
+		
+			You are eaten by a grue.
+			
+			Play Again => @zorkStart
+			Return to Demos => @demoStart
+			
+		.simpleSiteHeader
+			- Logo in header with link back to homepage
+			
+		.simpleSiteHeaderLoggedIn
+			+= .simpleSiteHeader
+			- Username in header
+			- Logout link in header
+			
+		.simpleSiteHeaderNotLoggedIn
+			+= .simpleSiteHeader
+			- Login link in header
+			- Register link in header
+			
+		@simpleSiteDemo Simple Website Demo
+		
+			This demo shows another feature of Quxly - mixins.  You define a mixin using a starting dot and then
+			use that mixin within other states or mixins with the &#43;= operator.  In the example below we
+			have headers built from other headers which saves you from repeating yourself.  A wildcard state
+			is also used to add the footer to all the homepage states.
+		
+			<pre>
+			&#46;simpleSiteHeader
+				&#45; Logo in header with link back to homepage
+
+			&#46;simpleSiteHeaderLoggedIn
+				&#43;= .simpleSiteHeader
+				- Username in header
+				- Logout link in header
+				
+			&#46;simpleSiteHeaderNotLoggedIn
+				&#43;= .simpleSiteHeader
+				- Login link in header
+				- Register link in header
+				
+			&#64;simpleSiteDemo Simple Website Demo
+			
+				Homepage if logged in =&gt; @simpleSiteHomepageLoggedIn
+				Homepage if not logged in =&gt; @simpleSiteHomepageNotLoggedIn
+				
+			&#46;simpleSiteHomepageContent
+				Full page picture of cute kittens with BUY NOW! link.
+				
+				BUY NOW =&gt; @simpleSiteHomepageBuyNow
+				
+			&#64;simpleSiteHomepageLoggedIn Simple Website Homepage (Logged In)
+				&#43;= .simpleSiteHeaderLoggedIn
+				
+				&#43;= .simpleSiteHomepageContent
+				
+			&#64;simpleSiteHomepageNotLoggedIn Simple Website Homepage (Not Logged In)
+				&#43;= .simpleSiteHeaderNotLoggedIn
+				
+				&#43;= .simpleSiteHomepageContent
+				
+			&#64;simpleSiteHomepageBuyNow BUY NOW! message is shown
+				
+				The BUY NOW! message is shown over the kittens with an Add to Cart link.
+				
+				Add to Cart =&gt; @addToCart	
+
+			&#47;&#47; Add the footer links to all the homepage states
+			&#64;.*Homepage.*
+			
+				- Copyright in footer
+				- Terms of Service in footer
+				- About Us in footer				
+			</pre>
+		
+			Homepage if logged in => @simpleSiteHomepageLoggedIn
+			Homepage if not logged in => @simpleSiteHomepageNotLoggedIn
+			
+		.simpleSiteHomepageContent
+			Full page picture of cute kittens with BUY NOW! link.
+			
+			BUY NOW => @simpleSiteHomepageBuyNow
+			
+		@simpleSiteHomepageLoggedIn Simple Website Homepage (Logged In)
+			+= .simpleSiteHeaderLoggedIn
+			
+			+= .simpleSiteHomepageContent
+			
+		@simpleSiteHomepageNotLoggedIn Simple Website Homepage (Not Logged In)
+			+= .simpleSiteHeaderNotLoggedIn
+			
+			+= .simpleSiteHomepageContent
+			
+		@simpleSiteHomepageBuyNow BUY NOW! message is shown
+		
+			The BUY NOW! message is shown over the kittens with an Add to Cart link.
+			
+			Add to Cart => @addToCart
+			
+		// Add the footer links to all the homepage states
+		@.*Homepage.*
+		
+			- Copyright in footer
+			- Terms of Service in footer
+			- About Us in footer
