@@ -1,7 +1,7 @@
 <html>
 <head>
 	<meta charset="UTF-8" />
-	<title>Plain QUX Viewer</title>
+	<title>Plain QUX File Viewer</title>
 	<link rel="stylesheet" href="plainviewer.css" type="text/css" media="screen"> 
 	
 	<!-- quxly.js has no dependencies... -->
@@ -11,24 +11,45 @@
 	<script type="text/javascript" src="js/3rd/showdown.js"></script>
 	
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+	<script type="text/javascript" src="js/3rd/jquery.ba-hashchange.min.js"></script>
 	
 	<script type="text/javascript">
 	
 		$(function () {
-			var converter = new Showdown.converter();
-				
-			$(".quxLink").click(function () {
+			var converter = new Showdown.converter(),
+				quxViewer, quxFile;
 			
-				$.get(this.href, function (data) {
+			if (window.location.search.length > 1) {
+			
+				var file = null;
+				var params = window.location.search.substr(1).split("&");
+				for (var i=0; i < params.length; i++) {
+					var keyValue = params[i].split("=");
+					if (keyValue[0] == "file") {
+						file = keyValue[1];
+						break;
+					}
+				}
 				
-					var quxFile = Quxly.File(data);
-					var quxViewer = Quxly.Viewer(quxFile, {
+				if (!file) {
+					return;
+				}
+			
+				$.get(file, function (data) {
+				
+					quxFile = Quxly.File(data);
+					quxViewer = Quxly.Viewer(quxFile, {
 					
 						// were to add the elements
 						container: $("#container")[0],
 						
 						// don't show the state name at the top
 						hideState: true,
+						
+						// keep the state in the history so we enable the back/forward buttons
+						afterStateChange: function (state) {
+							window.location.hash = state.name;
+						},
 						
 						// markdown converter
 						descriptionGenerator: function (descriptionArray) {
@@ -57,21 +78,32 @@
 					
 					quxViewer.start();
 				});
+			}
 				
-				return false;
+			$(window).hashchange(function () {
+				var newStateName = window.location.hash.substr(1);
+				if (newStateName.length == 0) {
+					return;
+				}
+				
+				if (quxViewer) {
+					quxViewer.start(newStateName);
+				}
 			});
+			$(window).hashchange();	
+		
 		});
 	
 	</script>
 </head>
 <body>
-	<h1>Plain QUX Viewer</h1>
+	<h1>Plain QUX File Viewer</h1>
 	
 	<!-- add links to external qux files here using the quxLink class -->
 
-	<a href="demos.qux" class="quxLink">Demos</a> 
+	<a href="?file=demos.qux" class="quxLink">Demos</a> 
 	|
-	<a href="documentation.qux" class="quxLink">Documentation</a>
+	<a href="?file=documentation.qux" class="quxLink">Documentation</a>
 	
 	<!-- this is where the presentation is injected -->
 	<div id="container"></div>
